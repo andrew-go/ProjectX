@@ -1,4 +1,6 @@
-package com.example.projectx;
+package charen.gtv.projectx;
+
+import com.example.projectx.R;
 
 import android.os.Bundle;
 import android.app.Activity;
