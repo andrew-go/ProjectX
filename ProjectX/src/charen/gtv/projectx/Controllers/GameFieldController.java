@@ -83,4 +83,8 @@ public class GameFieldController {
 	public int getFieldHeight() {
 		return fieldRectSize * fieldRowsCount;
 	}
+	
+	public boolean isEmptySpace(int rowIndex, int columnIndex) {
+		return GameFieldController.Instance().GameField[rowIndex][columnIndex] == -1;
+	}
 }

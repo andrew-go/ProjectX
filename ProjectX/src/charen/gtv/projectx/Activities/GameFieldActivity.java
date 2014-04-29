@@ -62,7 +62,7 @@ public class GameFieldActivity extends Activity {
 			public boolean onTouch(View v, MotionEvent event) {
 				GameFieldController.Instance().selectedColumnIndex = (int) (event.getX() - GameFieldController.Instance().leftTopPoint.x) / GameFieldController.Instance().getFieldRectSize();
 				GameFieldController.Instance().selectedRowIndex = (int) (event.getY() - GameFieldController.Instance().leftTopPoint.y) / GameFieldController.Instance().getFieldRectSize();
-				if (selectUnit() || GameFieldController.Instance().selectedUnit == null || GameFieldController.Instance().GameField[GameFieldController.Instance().selectedRowIndex][GameFieldController.Instance().selectedColumnIndex] == -1)
+				if (selectUnit() || GameFieldController.Instance().selectedUnit == null || GameFieldController.Instance().isEmptySpace(GameFieldController.Instance().selectedRowIndex, GameFieldController.Instance().selectedColumnIndex))
 					return false;
 				GameFieldController.Instance().selectedUnit.x = GameFieldController.Instance().selectedColumnIndex;
 				GameFieldController.Instance().selectedUnit.y = GameFieldController.Instance().selectedRowIndex;
