@@ -64,8 +64,16 @@ public class GameFieldActivity extends Activity {
 				GameFieldController.Instance().selectedRowIndex = (int) (event.getY() - GameFieldController.Instance().leftTopPoint.y) / GameFieldController.Instance().getFieldRectSize();
 				if (selectUnit() || GameFieldController.Instance().selectedUnit == null || GameFieldController.Instance().isEmptySpace(GameFieldController.Instance().selectedRowIndex, GameFieldController.Instance().selectedColumnIndex))
 					return false;
+				
+				if (GameFieldController.Instance().selectedUnit.x + GameFieldController.Instance().selectedUnit.moveRadius < GameFieldController.Instance().selectedColumnIndex 
+						|| GameFieldController.Instance().selectedUnit.x - GameFieldController.Instance().selectedUnit.moveRadius > GameFieldController.Instance().selectedColumnIndex
+						|| GameFieldController.Instance().selectedUnit.y + GameFieldController.Instance().selectedUnit.moveRadius < GameFieldController.Instance().selectedRowIndex 
+						|| GameFieldController.Instance().selectedUnit.y - GameFieldController.Instance().selectedUnit.moveRadius > GameFieldController.Instance().selectedRowIndex)
+					return false;
+				GameFieldController.Instance().gameField[GameFieldController.Instance().selectedUnit.y][GameFieldController.Instance().selectedUnit.x] = 0;
 				GameFieldController.Instance().selectedUnit.x = GameFieldController.Instance().selectedColumnIndex;
 				GameFieldController.Instance().selectedUnit.y = GameFieldController.Instance().selectedRowIndex;
+				GameFieldController.Instance().gameField[GameFieldController.Instance().selectedUnit.y][GameFieldController.Instance().selectedUnit.x] = GameFieldController.Instance().selectedUnit.type;
 				return false;
 			}
 		});

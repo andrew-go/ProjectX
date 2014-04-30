@@ -22,7 +22,7 @@ public class GameFieldController {
 	
 	public GameFieldThread gameFieldThread;
 	
-	public int GameField[][];
+	public int gameField[][];
 	
 	private int fieldRectSize;
 	
@@ -56,20 +56,21 @@ public class GameFieldController {
 		fieldColumsCount = 9;
 		fieldRectSize = 10 * (int) (DeviceSettings.Instance().width / (fieldColumsCount * 10));
 		fieldRowsCount = (int) DeviceSettings.Instance().height / fieldRectSize;
-		GameField = new int[fieldRowsCount][fieldColumsCount];
+		gameField = new int[fieldRowsCount][fieldColumsCount];
 		initArray();
 		initObjects();
+		fillGameField();
 	}
 	
 	private void initArray() {
 		Random random = new Random();
         for (int i = 0; i < getFieldRowsCount(); i++)
         	for (int j = 0; j < getFieldColumsCount(); j++)
-        		GameField[i][j] = random.nextInt(8) == 1 ? -1 : 0;
+        		gameField[i][j] = random.nextInt(8) == 1 ? -1 : 0;
 	}
 	
 	private void initObjects() {
-		Soldier soldier1 = new Soldier(2,2);
+		Soldier soldier1 = new Soldier(2,4);
 		Soldier soldier2 = new Soldier(2,6);
 		objectList = new ArrayList<BaseObject>();
 		objectList.add(soldier1);
@@ -85,6 +86,11 @@ public class GameFieldController {
 	}
 	
 	public boolean isEmptySpace(int rowIndex, int columnIndex) {
-		return GameFieldController.Instance().GameField[rowIndex][columnIndex] == -1;
+		return GameFieldController.Instance().gameField[rowIndex][columnIndex] == -1;
+	}
+	
+	public void fillGameField() {
+		for (BaseObject baseObject : objectList)
+			gameField[baseObject.y][baseObject.x] = baseObject.type;
 	}
 }
