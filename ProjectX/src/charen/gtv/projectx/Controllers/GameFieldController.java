@@ -1,6 +1,7 @@
 package charen.gtv.projectx.Controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -8,6 +9,7 @@ import android.graphics.Point;
 
 import charen.gtv.projectx.DeviceSettings;
 import charen.gtv.projectx.Objects.BaseObject;
+import charen.gtv.projectx.Objects.Defender;
 import charen.gtv.projectx.Objects.Soldier;
 import charen.gtv.projectx.Objects.Unit;
 import charen.gtv.projectx.Threads.GameFieldThread;
@@ -23,6 +25,7 @@ public class GameFieldController {
 	public GameFieldThread gameFieldThread;
 	
 	public int gameField[][];
+	public Object gameObjectField[][];
 	
 	private int fieldRectSize;
 	
@@ -57,6 +60,7 @@ public class GameFieldController {
 		fieldRectSize = 10 * (int) (DeviceSettings.Instance().width / (fieldColumsCount * 10));
 		fieldRowsCount = (int) DeviceSettings.Instance().height / fieldRectSize;
 		gameField = new int[fieldRowsCount][fieldColumsCount];
+		gameObjectField = new Object[fieldRowsCount][fieldColumsCount];
 		initArray();
 		initObjects();
 		fillGameField();
@@ -70,11 +74,11 @@ public class GameFieldController {
 	}
 	
 	private void initObjects() {
-		Soldier soldier1 = new Soldier(2,4);
-		Soldier soldier2 = new Soldier(2,6);
+		Soldier soldier = new Soldier(2,4,0);
+		Defender defender = new Defender(2,6,1);
 		objectList = new ArrayList<BaseObject>();
-		objectList.add(soldier1);
-		objectList.add(soldier2);
+		objectList.add(soldier);
+		objectList.add(defender);
 	}
 	
 	public int getFieldWidth() {
@@ -91,6 +95,6 @@ public class GameFieldController {
 	
 	public void fillGameField() {
 		for (BaseObject baseObject : objectList)
-			gameField[baseObject.y][baseObject.x] = baseObject.type;
+			gameObjectField[baseObject.y][baseObject.x] = baseObject;
 	}
 }

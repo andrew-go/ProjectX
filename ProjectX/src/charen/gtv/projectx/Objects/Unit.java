@@ -10,12 +10,15 @@ public class Unit extends BaseObject {
 	
 	public int attackRadius;
 	
-	public Unit(int type) {
-		super(type);
-	}
+	public int team;
 	
-	public Unit(int type, int x, int y) {
+//	public Unit(int type) {
+//		super(type);
+//	}
+	
+	public Unit(int type, int x, int y, int team) {
 		super(type, x, y);
+		this.team = team;  
 	}
 
 }
