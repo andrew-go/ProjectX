@@ -1,12 +1,10 @@
 package charen.gtv.projectx.Controllers;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 import android.graphics.Point;
-
 import charen.gtv.projectx.DeviceSettings;
 import charen.gtv.projectx.Objects.BaseObject;
 import charen.gtv.projectx.Objects.Defender;
