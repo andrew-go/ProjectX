@@ -68,15 +68,16 @@ public class GameFieldController {
 		Random random = new Random();
         for (int i = 0; i < getFieldRowsCount(); i++)
         	for (int j = 0; j < getFieldColumsCount(); j++)
-        		gameField[i][j] = random.nextInt(8) == 1 ? -1 : 0;
+        		gameField[i][j] = random.nextInt(8) == 1 && i != 0 && i != 13? -1 : 0;
 	}
 	
 	private void initObjects() {
-		Soldier soldier = new Soldier(2,4,0);
-		Defender defender = new Defender(2,6,1);
 		objectList = new ArrayList<BaseObject>();
-		objectList.add(soldier);
-		objectList.add(defender);
+		objectList.add(new Soldier(3,0,0));
+		objectList.add(new Defender(5,0,0));
+		objectList.add(new Soldier(5,13,1));
+		objectList.add(new Defender(3,13,1));
+		
 	}
 	
 	public int getFieldWidth() {

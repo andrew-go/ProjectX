@@ -107,9 +107,8 @@ public class GameFieldThread extends Thread {
     }
     
     public void drawTacticalRadius(Canvas canvas) {
-///CHECK THIS
-    	for (int i = GameFieldController.Instance().selectedUnit.y-GameFieldController.Instance().selectedUnit.moveRadius; i < GameFieldController.Instance().selectedUnit.moveRadius*2+1; i++)
-    		for (int j = GameFieldController.Instance().selectedUnit.x-GameFieldController.Instance().selectedUnit.moveRadius; j < GameFieldController.Instance().selectedUnit.moveRadius*2+1; j++) {
+    	for (int i = GameFieldController.Instance().selectedUnit.y-GameFieldController.Instance().selectedUnit.moveRadius; i < GameFieldController.Instance().selectedUnit.y + GameFieldController.Instance().selectedUnit.moveRadius+1; i++)
+    		for (int j = GameFieldController.Instance().selectedUnit.x-GameFieldController.Instance().selectedUnit.moveRadius; j < GameFieldController.Instance().selectedUnit.x + GameFieldController.Instance().selectedUnit.moveRadius + 1; j++) {
     			if (i < 0  || i >= GameFieldController.Instance().getFieldRowsCount() || j < 0  || j >= GameFieldController.Instance().getFieldColumsCount())
     				continue;
     			if (GameFieldController.Instance().gameField[i][j] == 0 && GameFieldController.Instance().gameObjectField[i][j] == null) {
@@ -122,8 +121,8 @@ public class GameFieldThread extends Thread {
 	    					paint2);
     			}
     		}
-    	for (int i = GameFieldController.Instance().selectedUnit.y-GameFieldController.Instance().selectedUnit.moveRadius; i < GameFieldController.Instance().selectedUnit.attackRadius*2+GameFieldController.Instance().selectedUnit.y; i++)
-    		for (int j = GameFieldController.Instance().selectedUnit.x-GameFieldController.Instance().selectedUnit.moveRadius; j < GameFieldController.Instance().selectedUnit.attackRadius*2+GameFieldController.Instance().selectedUnit.x; j++) {
+    	for (int i = GameFieldController.Instance().selectedUnit.y-GameFieldController.Instance().selectedUnit.attackRadius; i < GameFieldController.Instance().selectedUnit.y + GameFieldController.Instance().selectedUnit.attackRadius + 1; i++)
+    		for (int j = GameFieldController.Instance().selectedUnit.x-GameFieldController.Instance().selectedUnit.attackRadius; j < GameFieldController.Instance().selectedUnit.x + GameFieldController.Instance().selectedUnit.attackRadius + 1; j++) {
     			if (i < 0  || i >= GameFieldController.Instance().getFieldRowsCount() || j < 0  || j >= GameFieldController.Instance().getFieldColumsCount())
     				continue;
     			if (GameFieldController.Instance().gameObjectField[i][j] instanceof Unit && ((Unit)GameFieldController.Instance().gameObjectField[i][j]).team != GameFieldController.Instance().selectedUnit.team) {
