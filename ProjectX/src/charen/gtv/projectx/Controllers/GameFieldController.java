@@ -52,11 +52,13 @@ public class GameFieldController {
 	public int selectedColumnIndex = -1;
 	public int selectedRowIndex = -1;
 	
+	public int teamTurn = 0;
+	
 	public GameFieldController() {
 		leftTopPoint = new Point(0, 0);
 		fieldColumsCount = 9;
 		fieldRectSize = 10 * (int) (DeviceSettings.Instance().width / (fieldColumsCount * 10));
-		fieldRowsCount = (int) DeviceSettings.Instance().height / fieldRectSize;
+		fieldRowsCount = ((int) DeviceSettings.Instance().height / fieldRectSize) - 1;
 		gameField = new int[fieldRowsCount][fieldColumsCount];
 		gameObjectField = new Object[fieldRowsCount][fieldColumsCount];
 		initArray();
@@ -68,15 +70,15 @@ public class GameFieldController {
 		Random random = new Random();
         for (int i = 0; i < getFieldRowsCount(); i++)
         	for (int j = 0; j < getFieldColumsCount(); j++)
-        		gameField[i][j] = random.nextInt(8) == 1 && i != 0 && i != 13? -1 : 0;
+        		gameField[i][j] = random.nextInt(8) == 1 && i != 0 && i != 12? -1 : 0;
 	}
 	
 	private void initObjects() {
 		objectList = new ArrayList<BaseObject>();
 		objectList.add(new Soldier(3,0,0));
 		objectList.add(new Defender(5,0,0));
-		objectList.add(new Soldier(5,13,1));
-		objectList.add(new Defender(3,13,1));
+		objectList.add(new Soldier(5,12,1));
+		objectList.add(new Defender(3,12,1));
 		
 	}
 	

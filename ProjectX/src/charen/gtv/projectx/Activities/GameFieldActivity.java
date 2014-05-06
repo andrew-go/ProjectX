@@ -62,20 +62,50 @@ public class GameFieldActivity extends Activity {
 			public boolean onTouch(View v, MotionEvent event) {
 				GameFieldController.Instance().selectedColumnIndex = (int) (event.getX() - GameFieldController.Instance().leftTopPoint.x) / GameFieldController.Instance().getFieldRectSize();
 				GameFieldController.Instance().selectedRowIndex = (int) (event.getY() - GameFieldController.Instance().leftTopPoint.y) / GameFieldController.Instance().getFieldRectSize();
-				if (selectUnit() || GameFieldController.Instance().selectedUnit == null || GameFieldController.Instance().isEmptySpace(GameFieldController.Instance().selectedRowIndex, GameFieldController.Instance().selectedColumnIndex))
+				
+				//add check about what is happening (selection, move, attack)
+				
+
+				
+				//Check is unit selection
+				if (selectUnit())
 					return false;
 				
-				if (GameFieldController.Instance().selectedUnit.x + GameFieldController.Instance().selectedUnit.moveRadius < GameFieldController.Instance().selectedColumnIndex 
-						|| GameFieldController.Instance().selectedUnit.x - GameFieldController.Instance().selectedUnit.moveRadius > GameFieldController.Instance().selectedColumnIndex
-						|| GameFieldController.Instance().selectedUnit.y + GameFieldController.Instance().selectedUnit.moveRadius < GameFieldController.Instance().selectedRowIndex 
-						|| GameFieldController.Instance().selectedUnit.y - GameFieldController.Instance().selectedUnit.moveRadius > GameFieldController.Instance().selectedRowIndex)
+				//Check is empty
+				else if (GameFieldController.Instance().selectedUnit == null || GameFieldController.Instance().isEmptySpace(GameFieldController.Instance().selectedRowIndex, GameFieldController.Instance().selectedColumnIndex))
 					return false;
-				if (GameFieldController.Instance().selectedUnit.x == GameFieldController.Instance().selectedColumnIndex && GameFieldController.Instance().selectedUnit.y == GameFieldController.Instance().selectedRowIndex)
+				
+				//Check if selected unit is the same
+				else if (GameFieldController.Instance().selectedUnit.x == GameFieldController.Instance().selectedColumnIndex && GameFieldController.Instance().selectedUnit.y == GameFieldController.Instance().selectedRowIndex)
 					return false;
-				GameFieldController.Instance().gameObjectField[GameFieldController.Instance().selectedUnit.y][GameFieldController.Instance().selectedUnit.x] = null;
-				GameFieldController.Instance().selectedUnit.x = GameFieldController.Instance().selectedColumnIndex;
-				GameFieldController.Instance().selectedUnit.y = GameFieldController.Instance().selectedRowIndex;
-				GameFieldController.Instance().gameObjectField[GameFieldController.Instance().selectedUnit.y][GameFieldController.Instance().selectedUnit.x] = GameFieldController.Instance().selectedUnit;
+
+				//Check is moving
+				else if (GameFieldController.Instance().selectedUnit != null && GameFieldController.Instance().gameField[GameFieldController.Instance().selectedRowIndex][GameFieldController.Instance().selectedColumnIndex] == 0 && GameFieldController.Instance().gameObjectField[GameFieldController.Instance().selectedRowIndex][GameFieldController.Instance().selectedColumnIndex] == null) {
+					//Check move radius
+					if (GameFieldController.Instance().selectedUnit.x + GameFieldController.Instance().selectedUnit.moveRadius < GameFieldController.Instance().selectedColumnIndex 
+							|| GameFieldController.Instance().selectedUnit.x - GameFieldController.Instance().selectedUnit.moveRadius > GameFieldController.Instance().selectedColumnIndex
+							|| GameFieldController.Instance().selectedUnit.y + GameFieldController.Instance().selectedUnit.moveRadius < GameFieldController.Instance().selectedRowIndex 
+							|| GameFieldController.Instance().selectedUnit.y - GameFieldController.Instance().selectedUnit.moveRadius > GameFieldController.Instance().selectedRowIndex)
+						return false;				
+					//Set selected unit new coordinates
+					GameFieldController.Instance().gameObjectField[GameFieldController.Instance().selectedUnit.y][GameFieldController.Instance().selectedUnit.x] = null;
+					GameFieldController.Instance().selectedUnit.x = GameFieldController.Instance().selectedColumnIndex;
+					GameFieldController.Instance().selectedUnit.y = GameFieldController.Instance().selectedRowIndex;
+					GameFieldController.Instance().gameObjectField[GameFieldController.Instance().selectedUnit.y][GameFieldController.Instance().selectedUnit.x] = GameFieldController.Instance().selectedUnit;
+				}
+				
+				//Check is attacking
+				else if (GameFieldController.Instance().selectedUnit != null && GameFieldController.Instance().gameObjectField[GameFieldController.Instance().selectedRowIndex][GameFieldController.Instance().selectedColumnIndex] != null && GameFieldController.Instance().gameObjectField[GameFieldController.Instance().selectedRowIndex][GameFieldController.Instance().selectedColumnIndex] instanceof Unit) {
+					//Check attack radius
+					if (GameFieldController.Instance().selectedUnit.x + GameFieldController.Instance().selectedUnit.attackRadius < GameFieldController.Instance().selectedColumnIndex 
+							|| GameFieldController.Instance().selectedUnit.x - GameFieldController.Instance().selectedUnit.attackRadius > GameFieldController.Instance().selectedColumnIndex
+							|| GameFieldController.Instance().selectedUnit.y + GameFieldController.Instance().selectedUnit.attackRadius < GameFieldController.Instance().selectedRowIndex 
+							|| GameFieldController.Instance().selectedUnit.y - GameFieldController.Instance().selectedUnit.attackRadius > GameFieldController.Instance().selectedRowIndex)
+						return false;				
+					//Attack enemy unit (now unit is deleting)
+					GameFieldController.Instance().objectList.remove((Object)GameFieldController.Instance().gameObjectField[GameFieldController.Instance().selectedRowIndex][GameFieldController.Instance().selectedColumnIndex]);
+					GameFieldController.Instance().gameObjectField[GameFieldController.Instance().selectedRowIndex][GameFieldController.Instance().selectedColumnIndex] = null;
+				}
 				return false;
 			}
 		});
@@ -83,7 +113,7 @@ public class GameFieldActivity extends Activity {
 	
 	private boolean selectUnit() {
 		for (BaseObject baseObject : GameFieldController.Instance().objectList)
-			if (baseObject instanceof Unit && baseObject.x == GameFieldController.Instance().selectedColumnIndex && baseObject.y == GameFieldController.Instance().selectedRowIndex) {
+			if (baseObject instanceof Unit && baseObject.x == GameFieldController.Instance().selectedColumnIndex && baseObject.y == GameFieldController.Instance().selectedRowIndex && ((Unit) baseObject).team == GameFieldController.Instance().teamTurn) {
 				GameFieldController.Instance().selectedUnit = (Unit) baseObject;
 				return true;
 			}

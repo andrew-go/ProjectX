@@ -79,13 +79,16 @@ public class GameFieldThread extends Thread {
             		for (int i = 0; i < GameFieldController.Instance().getFieldRowsCount(); i++)
             			for (int j = 0; j < GameFieldController.Instance().getFieldColumsCount(); j++) {
             				paint.setColor(Color.GRAY);
-            				if (GameFieldController.Instance().gameField[i][j] == -1)
+            				if (GameFieldController.Instance().gameField[i][j] == -1)// {
             					paint.setColor(Color.DKGRAY);
-	              			canvas.drawRect(GameFieldController.Instance().leftTopPoint.x + j * GameFieldController.Instance().getFieldRectSize() + 4, 
-	              					GameFieldController.Instance().leftTopPoint.y + i * GameFieldController.Instance().getFieldRectSize() + 4, 
-	              					GameFieldController.Instance().leftTopPoint.x + j * GameFieldController.Instance().getFieldRectSize() + GameFieldController.Instance().getFieldRectSize() - 4, 
-	              					GameFieldController.Instance().leftTopPoint.y + i * GameFieldController.Instance().getFieldRectSize() + GameFieldController.Instance().getFieldRectSize() - 4, 
-	              					paint);
+		              			canvas.drawRect(GameFieldController.Instance().leftTopPoint.x + j * GameFieldController.Instance().getFieldRectSize() + 4, 
+		              					GameFieldController.Instance().leftTopPoint.y + i * GameFieldController.Instance().getFieldRectSize() + 4, 
+		              					GameFieldController.Instance().leftTopPoint.x + j * GameFieldController.Instance().getFieldRectSize() + GameFieldController.Instance().getFieldRectSize() - 4, 
+		              					GameFieldController.Instance().leftTopPoint.y + i * GameFieldController.Instance().getFieldRectSize() + GameFieldController.Instance().getFieldRectSize() - 4, 
+		              					paint);
+//            				}
+//            				else
+//            					canvas.drawBitmap(pictureContainer.grass, GameFieldController.Instance().leftTopPoint.x + j * GameFieldController.Instance().getFieldRectSize(), GameFieldController.Instance().leftTopPoint.y + i * GameFieldController.Instance().getFieldRectSize(), paint);
                   	}                
 	              	if (GameFieldController.Instance().selectedUnit != null)
 	              		drawTacticalRadius(canvas);
@@ -112,8 +115,8 @@ public class GameFieldThread extends Thread {
     			if (i < 0  || i >= GameFieldController.Instance().getFieldRowsCount() || j < 0  || j >= GameFieldController.Instance().getFieldColumsCount())
     				continue;
     			if (GameFieldController.Instance().gameField[i][j] == 0 && GameFieldController.Instance().gameObjectField[i][j] == null) {
-    		    	paint2.setColor(Color.GREEN);
-    		    	paint2.setAlpha(50);
+    		    	paint2.setColor(Color.WHITE);
+    		    	paint2.setAlpha(80);
 	    			canvas.drawRect(GameFieldController.Instance().leftTopPoint.x + j * GameFieldController.Instance().getFieldRectSize() + 4, 
 	    					GameFieldController.Instance().leftTopPoint.y + i * GameFieldController.Instance().getFieldRectSize() + 4, 
 	    					GameFieldController.Instance().leftTopPoint.x + j * GameFieldController.Instance().getFieldRectSize() + GameFieldController.Instance().getFieldRectSize() - 4, 
@@ -127,7 +130,7 @@ public class GameFieldThread extends Thread {
     				continue;
     			if (GameFieldController.Instance().gameObjectField[i][j] instanceof Unit && ((Unit)GameFieldController.Instance().gameObjectField[i][j]).team != GameFieldController.Instance().selectedUnit.team) {
     		    	paint2.setColor(Color.RED);
-    		    	paint2.setAlpha(50);
+    		    	paint2.setAlpha(80);
 	    			canvas.drawRect(GameFieldController.Instance().leftTopPoint.x + j * GameFieldController.Instance().getFieldRectSize() + 4, 
 	    					GameFieldController.Instance().leftTopPoint.y + i * GameFieldController.Instance().getFieldRectSize() + 4, 
 	    					GameFieldController.Instance().leftTopPoint.x + j * GameFieldController.Instance().getFieldRectSize() + GameFieldController.Instance().getFieldRectSize() - 4, 
