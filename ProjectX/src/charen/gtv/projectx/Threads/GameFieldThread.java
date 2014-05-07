@@ -78,17 +78,10 @@ public class GameFieldThread extends Thread {
             		canvas.drawColor(Color.LTGRAY);
             		for (int i = 0; i < GameFieldController.Instance().getFieldRowsCount(); i++)
             			for (int j = 0; j < GameFieldController.Instance().getFieldColumsCount(); j++) {
-            				paint.setColor(Color.GRAY);
-            				if (GameFieldController.Instance().gameField[i][j] == -1)// {
-            					paint.setColor(Color.DKGRAY);
-		              			canvas.drawRect(GameFieldController.Instance().leftTopPoint.x + j * GameFieldController.Instance().getFieldRectSize() + 4, 
-		              					GameFieldController.Instance().leftTopPoint.y + i * GameFieldController.Instance().getFieldRectSize() + 4, 
-		              					GameFieldController.Instance().leftTopPoint.x + j * GameFieldController.Instance().getFieldRectSize() + GameFieldController.Instance().getFieldRectSize() - 4, 
-		              					GameFieldController.Instance().leftTopPoint.y + i * GameFieldController.Instance().getFieldRectSize() + GameFieldController.Instance().getFieldRectSize() - 4, 
-		              					paint);
-//            				}
-//            				else
-//            					canvas.drawBitmap(pictureContainer.grass, GameFieldController.Instance().leftTopPoint.x + j * GameFieldController.Instance().getFieldRectSize(), GameFieldController.Instance().leftTopPoint.y + i * GameFieldController.Instance().getFieldRectSize(), paint);
+            				if (GameFieldController.Instance().gameField[i][j] == -1)
+            					canvas.drawBitmap(pictureContainer.emptyGround, GameFieldController.Instance().leftTopPoint.x + j * GameFieldController.Instance().getFieldRectSize(), GameFieldController.Instance().leftTopPoint.y + i * GameFieldController.Instance().getFieldRectSize(), paint);
+            				else
+            					canvas.drawBitmap(pictureContainer.ground, GameFieldController.Instance().leftTopPoint.x + j * GameFieldController.Instance().getFieldRectSize(), GameFieldController.Instance().leftTopPoint.y + i * GameFieldController.Instance().getFieldRectSize(), paint);
                   	}                
 	              	if (GameFieldController.Instance().selectedUnit != null)
 	              		drawTacticalRadius(canvas);
